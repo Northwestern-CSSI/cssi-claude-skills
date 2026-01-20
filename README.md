@@ -1,128 +1,87 @@
 # CSSI Claude Skills
 
-Specialized Claude Code skills for **Science of Science** research at the [Center for Science of Science & Innovation (CSSI)](https://www.kellogg.northwestern.edu/research/science-of-science.aspx) at Northwestern University.
+A curated collection of Claude Code skills developed by Northwestern University's [Center for Science of Science & Innovation (CSSI)](https://cssi.kellogg.northwestern.edu/).
 
-## Skills Overview
+## Getting Started
 
-### Research Database Skills
+### Install as a Claude Code Plugin
 
-| Skill | Description |
-|-------|-------------|
-| **[dimensions](./skills/dimensions)** | Query the Dimensions database (140M+ publications, 8M+ grants, 60M+ patents). Natural language to DSL translation, auto-saved results as parquet + jsonl. |
-| **[openalex](./skills/openalex)** | Query the OpenAlex open database (240M+ works, 90M+ authors, 109K institutions). No authentication required. |
-
-### Science of Science Research Skills
-
-| Skill | Description |
-|-------|-------------|
-| **[scisci-analytics](./skills/scisci-analytics)** | Statistical analysis, regression with fixed effects, visualization, and robustness checks for SciSci research. Includes forest plots, trend lines, and publication-ready figures. |
-| **[scisci-database](./skills/scisci-database)** | Data extraction, cleaning, entity resolution (author disambiguation, institution matching), and quality validation pipelines. |
-| **[scisci-literature](./skills/scisci-literature)** | Research question formulation, hypothesis framing, publication standards for top venues (Nature/Science/PNAS), and narrative design. |
-
-### Utility Skills
-
-| Skill | Description |
-|-------|-------------|
-| **[prompt-refiner](./skills/prompt-refiner)** | Improve instruction clarity using the CLEAR framework (Context, Limits, Examples, Action, Result). |
-| **[claude-config-backup](./skills/claude-config-backup)** | Backup and migrate Claude Code configurations, settings, and skills. |
-
-## Installation
-
-### Via Claude Code CLI
+Connect your Claude Code instance to this skills marketplace by running:
 
 ```bash
-# Add the CSSI marketplace
-/plugin marketplace add Northwestern-CSSI/cssi-claude-skills
-
-# Browse and install skills
-/plugin install cssi-skills@Northwestern-CSSI/cssi-claude-skills
+claude skill add-marketplace https://github.com/Northwestern-CSSI/cssi-claude-skills
 ```
 
-### Manual Installation
+This registers the repository as a skill source, making all available skills accessible from your Claude Code environment.
 
-Clone directly to your Claude skills directory:
+### Enable Auto-Update
+
+To ensure you always have the latest skill versions, enable automatic updates:
 
 ```bash
-git clone https://github.com/Northwestern-CSSI/cssi-claude-skills.git ~/.claude/skills/cssi
+claude skill enable-auto-update cssi-skills
 ```
 
-Or copy specific skills:
+With auto-update enabled, Claude Code will periodically sync with this repository and pull any new or updated skills automatically.
+
+### Browse Available Skills
+
+After installation, view all available skills with:
 
 ```bash
-git clone https://github.com/Northwestern-CSSI/cssi-claude-skills.git /tmp/cssi-skills
-cp -r /tmp/cssi-skills/skills/dimensions ~/.claude/skills/
-cp -r /tmp/cssi-skills/skills/openalex ~/.claude/skills/
+claude skill list
 ```
 
-## Quick Start Examples
+Or invoke any skill directly by name during a Claude Code session using the `/<skill-name>` syntax.
 
-### Query Research Databases
+## Contributing Skills
 
-```bash
-# Search Dimensions for recent AI papers
-/dimensions search-publications "artificial intelligence" -f "year >= 2023" -m 1000
+Have a useful skill to share? You can upload your own skills to this marketplace.
 
-# Aggregate publications by funder
-/dimensions aggregate publications "quantum computing" -F funders -a "citations_avg"
+### Using the Upload Skill
 
-# Search OpenAlex for works by institution
-/openalex search works "machine learning" --filter "institutions.ror:https://ror.org/000e0be47"
+The easiest way to contribute is through Claude Code itself:
+
+```
+/upload-skill
 ```
 
-### Science of Science Analysis Workflow
+This interactive command will guide you through packaging and submitting your skill to the repository.
 
-```bash
-# 1. Extract and clean bibliometric data
-/scisci-database prepare dataset with author disambiguation and institution matching
+### Manual Contribution
 
-# 2. Run regression analysis with fixed effects
-/scisci-analytics run regression with author, field, and year fixed effects
+Alternatively, you can contribute manually:
 
-# 3. Generate publication-ready figures
-/scisci-analytics create forest plot for coefficient comparison
+1. Fork this repository
+2. Create your skill in the `skills/` directory following the standard structure:
+   ```
+   skills/your-skill-name/
+   ├── SKILL.md        # Main skill instructions (required)
+   ├── CLAUDE.md       # Claude-specific context (optional)
+   ├── helper.py       # Helper scripts (optional)
+   └── tests/          # Test files (optional)
+   ```
+3. Use the template in `template/` as a starting point
+4. Submit a pull request
 
-# 4. Frame findings for publication
-/scisci-literature frame results using counter-intuitive pattern for Nature submission
-```
-
-## Requirements
-
-| Skill | Requirements |
-|-------|--------------|
-| **dimensions** | Dimensions API access. Run `pip install dimcli && dimcli --init` to configure. |
-| **openalex** | None (open database, no authentication required) |
-| **scisci-*** | Python with pandas, numpy, scipy. R with fixest for regressions. |
+See `spec/` for detailed skill specification standards.
 
 ## Skill Structure
 
-Each skill follows the Agent Skills standard:
+Each skill follows a consistent format:
 
-```
-skill-name/
-├── SKILL.md          # Main instructions with YAML frontmatter
-├── CLAUDE.md         # Optional: additional context for Claude
-├── helper.py         # Optional: helper scripts
-└── tests/            # Optional: test files
-```
+- **`SKILL.md`** - The main instruction file with YAML frontmatter defining metadata and the skill's behavior
+- **`CLAUDE.md`** - Optional file providing additional context for Claude
+- **Helper files** - Optional Python scripts or other resources the skill may reference
 
-## About CSSI
+## Requirements
 
-The **Center for Science of Science & Innovation** at Northwestern University's Kellogg School of Management advances understanding of how science works and how to accelerate scientific discovery. Our research examines the structure and dynamics of science, including:
-
-- Team science and collaboration patterns
-- Research impact and citation dynamics
-- Funding and resource allocation
-- Innovation and knowledge diffusion
-
-## Contributing
-
-To add or modify skills:
-
-1. Fork this repository
-2. Create or modify skills in the `skills/` directory
-3. Follow the SKILL.md format with YAML frontmatter
-4. Submit a pull request
+Individual skills may have their own dependencies (Python packages, API credentials, etc.). Refer to each skill's documentation for specific requirements.
 
 ## License
 
-Apache 2.0
+Apache 2.0 - See [LICENSE](LICENSE) for details.
+
+## About CSSI
+
+The [Center for Science of Science & Innovation](https://cssi.kellogg.northwestern.edu/) at Northwestern University studies the structure and dynamics of science, including team collaboration, research impact, funding allocation, and knowledge diffusion.
