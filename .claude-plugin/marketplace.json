@@ -21,7 +21,7 @@
         "./skills/scisci-database",
         "./skills/scisci-literature",
         "./skills/prompt-refiner",
-        "./skills/claude-config-backup"
+        "./skills/upload-skill"
       ]
     }
   ]
