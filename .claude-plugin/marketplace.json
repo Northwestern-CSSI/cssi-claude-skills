@@ -21,7 +21,8 @@
         "./skills/scisci-database",
         "./skills/scisci-literature",
         "./skills/prompt-refiner",
-        "./skills/upload-skill"
+        "./skills/upload-skill",
+        "./skills/logging-refiner"
       ]
     }
   ]
