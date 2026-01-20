@@ -1,94 +1,128 @@
-> **Note:** This repository contains Anthropic's implementation of skills for Claude. For information about the Agent Skills standard, see [agentskills.io](http://agentskills.io).
+# CSSI Claude Skills
 
-# Skills
-Skills are folders of instructions, scripts, and resources that Claude loads dynamically to improve performance on specialized tasks. Skills teach Claude how to complete specific tasks in a repeatable way, whether that's creating documents with your company's brand guidelines, analyzing data using your organization's specific workflows, or automating personal tasks.
+Specialized Claude Code skills for **Science of Science** research at the [Center for Science of Science & Innovation (CSSI)](https://www.kellogg.northwestern.edu/research/science-of-science.aspx) at Northwestern University.
 
-For more information, check out:
-- [What are skills?](https://support.claude.com/en/articles/12512176-what-are-skills)
-- [Using skills in Claude](https://support.claude.com/en/articles/12512180-using-skills-in-claude)
-- [How to create custom skills](https://support.claude.com/en/articles/12512198-creating-custom-skills)
-- [Equipping agents for the real world with Agent Skills](https://anthropic.com/engineering/equipping-agents-for-the-real-world-with-agent-skills)
+## Skills Overview
 
-# About This Repository
+### Research Database Skills
 
-This repository contains skills that demonstrate what's possible with Claude's skills system. These skills range from creative applications (art, music, design) to technical tasks (testing web apps, MCP server generation) to enterprise workflows (communications, branding, etc.).
+| Skill | Description |
+|-------|-------------|
+| **[dimensions](./skills/dimensions)** | Query the Dimensions database (140M+ publications, 8M+ grants, 60M+ patents). Natural language to DSL translation, auto-saved results as parquet + jsonl. |
+| **[openalex](./skills/openalex)** | Query the OpenAlex open database (240M+ works, 90M+ authors, 109K institutions). No authentication required. |
 
-Each skill is self-contained in its own folder with a `SKILL.md` file containing the instructions and metadata that Claude uses. Browse through these skills to get inspiration for your own skills or to understand different patterns and approaches.
+### Science of Science Research Skills
 
-Many skills in this repo are open source (Apache 2.0). We've also included the document creation & editing skills that power [Claude's document capabilities](https://www.anthropic.com/news/create-files) under the hood in the [`skills/docx`](./skills/docx), [`skills/pdf`](./skills/pdf), [`skills/pptx`](./skills/pptx), and [`skills/xlsx`](./skills/xlsx) subfolders. These are source-available, not open source, but we wanted to share these with developers as a reference for more complex skills that are actively used in a production AI application.
+| Skill | Description |
+|-------|-------------|
+| **[scisci-analytics](./skills/scisci-analytics)** | Statistical analysis, regression with fixed effects, visualization, and robustness checks for SciSci research. Includes forest plots, trend lines, and publication-ready figures. |
+| **[scisci-database](./skills/scisci-database)** | Data extraction, cleaning, entity resolution (author disambiguation, institution matching), and quality validation pipelines. |
+| **[scisci-literature](./skills/scisci-literature)** | Research question formulation, hypothesis framing, publication standards for top venues (Nature/Science/PNAS), and narrative design. |
 
-## Disclaimer
+### Utility Skills
 
-**These skills are provided for demonstration and educational purposes only.** While some of these capabilities may be available in Claude, the implementations and behaviors you receive from Claude may differ from what is shown in these skills. These skills are meant to illustrate patterns and possibilities. Always test skills thoroughly in your own environment before relying on them for critical tasks.
+| Skill | Description |
+|-------|-------------|
+| **[prompt-refiner](./skills/prompt-refiner)** | Improve instruction clarity using the CLEAR framework (Context, Limits, Examples, Action, Result). |
+| **[claude-config-backup](./skills/claude-config-backup)** | Backup and migrate Claude Code configurations, settings, and skills. |
 
-# Skill Sets
-- [./skills](./skills): Skill examples for Creative & Design, Development & Technical, Enterprise & Communication, and Document Skills
-- [./spec](./spec): The Agent Skills specification
-- [./template](./template): Skill template
+## Installation
 
-# Try in Claude Code, Claude.ai, and the API
+### Via Claude Code CLI
 
-## Claude Code
-You can register this repository as a Claude Code Plugin marketplace by running the following command in Claude Code:
-```
-/plugin marketplace add anthropics/skills
-```
+```bash
+# Add the CSSI marketplace
+/plugin marketplace add Northwestern-CSSI/cssi-claude-skills
 
-Then, to install a specific set of skills:
-1. Select `Browse and install plugins`
-2. Select `anthropic-agent-skills`
-3. Select `document-skills` or `example-skills`
-4. Select `Install now`
-
-Alternatively, directly install either Plugin via:
-```
-/plugin install document-skills@anthropic-agent-skills
-/plugin install example-skills@anthropic-agent-skills
+# Browse and install skills
+/plugin install cssi-skills@Northwestern-CSSI/cssi-claude-skills
 ```
 
-After installing the plugin, you can use the skill by just mentioning it. For instance, if you install the `document-skills` plugin from the marketplace, you can ask Claude Code to do something like: "Use the PDF skill to extract the form fields from `path/to/some-file.pdf`"
+### Manual Installation
 
-## Claude.ai
+Clone directly to your Claude skills directory:
 
-These example skills are all already available to paid plans in Claude.ai. 
-
-To use any skill from this repository or upload custom skills, follow the instructions in [Using skills in Claude](https://support.claude.com/en/articles/12512180-using-skills-in-claude#h_a4222fa77b).
-
-## Claude API
-
-You can use Anthropic's pre-built skills, and upload custom skills, via the Claude API. See the [Skills API Quickstart](https://docs.claude.com/en/api/skills-guide#creating-a-skill) for more.
-
-# Creating a Basic Skill
-
-Skills are simple to create - just a folder with a `SKILL.md` file containing YAML frontmatter and instructions. You can use the **template-skill** in this repository as a starting point:
-
-```markdown
----
-name: my-skill-name
-description: A clear description of what this skill does and when to use it
----
-
-# My Skill Name
-
-[Add your instructions here that Claude will follow when this skill is active]
-
-## Examples
-- Example usage 1
-- Example usage 2
-
-## Guidelines
-- Guideline 1
-- Guideline 2
+```bash
+git clone https://github.com/Northwestern-CSSI/cssi-claude-skills.git ~/.claude/skills/cssi
 ```
 
-The frontmatter requires only two fields:
-- `name` - A unique identifier for your skill (lowercase, hyphens for spaces)
-- `description` - A complete description of what the skill does and when to use it
+Or copy specific skills:
 
-The markdown content below contains the instructions, examples, and guidelines that Claude will follow. For more details, see [How to create custom skills](https://support.claude.com/en/articles/12512198-creating-custom-skills).
+```bash
+git clone https://github.com/Northwestern-CSSI/cssi-claude-skills.git /tmp/cssi-skills
+cp -r /tmp/cssi-skills/skills/dimensions ~/.claude/skills/
+cp -r /tmp/cssi-skills/skills/openalex ~/.claude/skills/
+```
 
-# Partner Skills
+## Quick Start Examples
 
-Skills are a great way to teach Claude how to get better at using specific pieces of software. As we see awesome example skills from partners, we may highlight some of them here:
+### Query Research Databases
 
-- **Notion** - [Notion Skills for Claude](https://www.notion.so/notiondevs/Notion-Skills-for-Claude-28da4445d27180c7af1df7d8615723d0)
+```bash
+# Search Dimensions for recent AI papers
+/dimensions search-publications "artificial intelligence" -f "year >= 2023" -m 1000
+
+# Aggregate publications by funder
+/dimensions aggregate publications "quantum computing" -F funders -a "citations_avg"
+
+# Search OpenAlex for works by institution
+/openalex search works "machine learning" --filter "institutions.ror:https://ror.org/000e0be47"
+```
+
+### Science of Science Analysis Workflow
+
+```bash
+# 1. Extract and clean bibliometric data
+/scisci-database prepare dataset with author disambiguation and institution matching
+
+# 2. Run regression analysis with fixed effects
+/scisci-analytics run regression with author, field, and year fixed effects
+
+# 3. Generate publication-ready figures
+/scisci-analytics create forest plot for coefficient comparison
+
+# 4. Frame findings for publication
+/scisci-literature frame results using counter-intuitive pattern for Nature submission
+```
+
+## Requirements
+
+| Skill | Requirements |
+|-------|--------------|
+| **dimensions** | Dimensions API access. Run `pip install dimcli && dimcli --init` to configure. |
+| **openalex** | None (open database, no authentication required) |
+| **scisci-*** | Python with pandas, numpy, scipy. R with fixest for regressions. |
+
+## Skill Structure
+
+Each skill follows the Agent Skills standard:
+
+```
+skill-name/
+├── SKILL.md          # Main instructions with YAML frontmatter
+├── CLAUDE.md         # Optional: additional context for Claude
+├── helper.py         # Optional: helper scripts
+└── tests/            # Optional: test files
+```
+
+## About CSSI
+
+The **Center for Science of Science & Innovation** at Northwestern University's Kellogg School of Management advances understanding of how science works and how to accelerate scientific discovery. Our research examines the structure and dynamics of science, including:
+
+- Team science and collaboration patterns
+- Research impact and citation dynamics
+- Funding and resource allocation
+- Innovation and knowledge diffusion
+
+## Contributing
+
+To add or modify skills:
+
+1. Fork this repository
+2. Create or modify skills in the `skills/` directory
+3. Follow the SKILL.md format with YAML frontmatter
+4. Submit a pull request
+
+## License
+
+Apache 2.0

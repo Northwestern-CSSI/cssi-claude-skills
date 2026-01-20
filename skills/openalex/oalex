@@ -1,0 +1,8 @@
+#!/bin/bash
+# OpenAlex API CLI wrapper
+# Usage: oalex <command> [args]
+
+PYTHON="/opt/anaconda3/bin/conda run -n base python"
+HELPER="$HOME/.claude/skills/openalex/openalex_helper.py"
+
+$PYTHON "$HELPER" "$@"
