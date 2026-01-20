@@ -1,44 +1,27 @@
 {
-  "name": "anthropic-agent-skills",
+  "name": "cssi-claude-skills",
   "owner": {
-    "name": "Keith Lazuka",
-    "email": "klazuka@anthropic.com"
+    "name": "CSSI Northwestern",
+    "email": "cssi@kellogg.northwestern.edu"
   },
   "metadata": {
-    "description": "Anthropic example skills",
+    "description": "Science of Science research skills for Claude Code",
     "version": "1.0.0"
   },
   "plugins": [
     {
-      "name": "document-skills",
-      "description": "Collection of document processing suite including Excel, Word, PowerPoint, and PDF capabilities",
+      "name": "cssi-skills",
+      "description": "Complete Science of Science research toolkit including database queries, statistical analysis, data pipelines, and research design skills",
       "source": "./",
       "strict": false,
       "skills": [
-        "./skills/xlsx",
-        "./skills/docx",
-        "./skills/pptx",
-        "./skills/pdf"
-      ]
-    },
-    {
-      "name": "example-skills",
-      "description": "Collection of example skills demonstrating various capabilities including skill creation, MCP building, visual design, algorithmic art, internal communications, web testing, artifact building, Slack GIFs, and theme styling",
-      "source": "./",
-      "strict": false,
-      "skills": [
-        "./skills/algorithmic-art",
-        "./skills/brand-guidelines",
-        "./skills/canvas-design",
-        "./skills/doc-coauthoring",
-        "./skills/frontend-design",
-        "./skills/internal-comms",
-        "./skills/mcp-builder",
-        "./skills/skill-creator",
-        "./skills/slack-gif-creator",
-        "./skills/theme-factory",
-        "./skills/web-artifacts-builder",
-        "./skills/webapp-testing"
+        "./skills/dimensions",
+        "./skills/openalex",
+        "./skills/scisci-analytics",
+        "./skills/scisci-database",
+        "./skills/scisci-literature",
+        "./skills/prompt-refiner",
+        "./skills/claude-config-backup"
       ]
     }
   ]
